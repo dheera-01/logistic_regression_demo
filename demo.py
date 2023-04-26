@@ -115,70 +115,70 @@ class logistic_regression():
 
    
 
+with slt.sidebar:
+
+    slt.title("Logistic Rgeression")
 
 
-slt.title("Logistic Rgeression")
+    datasets=['Simple Classfication','Circles','Squares']
+    selected_dataset=slt.selectbox('Select Box', options=datasets)
 
+    degree=slt.select_slider('Degree', options=[1,2,3,4,5,6,7,8,9,10])
 
-datasets=['Simple Classfication','Circles','Squares']
-selected_dataset=slt.selectbox('Select Box', options=datasets)
+    L2_penalty=slt.slider('L2 Penanlty', min_value=0.0, max_value=10.0, value=1.0, step=0.1)
 
-degree=slt.select_slider('Degree', options=[1,2,3,4,5,6,7,8,9,10])
+    L2_penalty=float(L2_penalty)
+    X,y=None,None
 
-L2_penalty=slt.slider('L2 Penanlty', min_value=0.0, max_value=10.0, value=1.0, step=0.1)
+    if(selected_dataset=='Simple Classfication'):
+        X, y = make_classification(n_samples=1000, n_features=2, n_redundant=0, n_informative=2,
+                               random_state=1, n_clusters_per_class=1)
 
-L2_penalty=float(L2_penalty)
-X,y=None,None
-
-if(selected_dataset=='Simple Classfication'):
-    X, y = make_classification(n_samples=1000, n_features=2, n_redundant=0, n_informative=2,
-                           random_state=1, n_clusters_per_class=1)
-    
-    # fit the model and show the decision boundary
-    # fig,ax=plt.subplots()
-    # model=logistic_regression(degree,L2_penalty)
-    # model.fit(X,y)
-    # model.plot_decision_surface(X)
-    
+        # fit the model and show the decision boundary
+        # fig,ax=plt.subplots()
+        # model=logistic_regression(degree,L2_penalty)
+        # model.fit(X,y)
+        # model.plot_decision_surface(X)
 
 
 
 
-elif(selected_dataset=='Circles'):
-    X, y = make_circles(n_samples=1000, noise=0.1, random_state=1)
-    # fig,ax=plt.subplots()
-    # plt.scatter(X[:,0], X[:,1], c=y)
-    # slt.pyplot(fig)
 
-elif(selected_dataset=='Squares'):
-    n_samples = 1000  # Number of samples
-    centers = [(1,1), (-1, 1), (-1, -1), (1,-1)]
-    cluster_std = [0.5, 0.5, 0.5, 0.5]
-    random_state = 42  # Random state for reproducibility
+    elif(selected_dataset=='Circles'):
+        X, y = make_circles(n_samples=1000, noise=0.1, random_state=1)
+        # fig,ax=plt.subplots()
+        # plt.scatter(X[:,0], X[:,1], c=y)
+        # slt.pyplot(fig)
 
-    # Generate blob data
-    X, y = make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std, random_state=random_state)
+    elif(selected_dataset=='Squares'):
+        n_samples = 1000  # Number of samples
+        centers = [(1,1), (-1, 1), (-1, -1), (1,-1)]
+        cluster_std = [0.5, 0.5, 0.5, 0.5]
+        random_state = 42  # Random state for reproducibility
 
-    # combine the two classes in the first and third quadrant
-    y[y == 0] = 2
-    y[y == 3] = 1
-    # fig,ax=plt.subplots()
-    # # Plot the generated dataset
-    # colors = ['r', 'b', 'r', 'b']  # Color for each class
-    # for i in range(len(centers)):
-    #     plt.scatter(X[y == i, 0], X[y == i, 1], c=colors[i])
-    # plt.xlabel('X')
-    # plt.ylabel('Y')
-    # plt.title('Dataset with Two Classes in Quadrants')
-    # plt.legend()
-    # slt.pyplot(fig)
+        # Generate blob data
+        X, y = make_blobs(n_samples=n_samples, centers=centers, cluster_std=cluster_std, random_state=random_state)
 
+        # combine the two classes in the first and third quadrant
+        y[y == 0] = 2
+        y[y == 3] = 1
+        # fig,ax=plt.subplots()
+        # # Plot the generated dataset
+        # colors = ['r', 'b', 'r', 'b']  # Color for each class
+        # for i in range(len(centers)):
+        #     plt.scatter(X[y == i, 0], X[y == i, 1], c=colors[i])
+        # plt.xlabel('X')
+        # plt.ylabel('Y')
+        # plt.title('Dataset with Two Classes in Quadrants')
+        # plt.legend()
+        # slt.pyplot(fig)
 
-model = LogisticRegression(penalty='l2', C=L2_penalty)
-model.fit(X, y)
+with slt.spinner('Training Model...'):
+    model = LogisticRegression(penalty='l2', C=L2_penalty)
+    model.fit(X, y)
 
-fig,ax=plt.subplots()
-model=logistic_regression(degree,L2_penalty)
-model.fit(X,y)
-model.plot_decision_surface(X)
-model.plot_hist_weights()
+    fig,ax=plt.subplots()
+    model=logistic_regression(degree,L2_penalty)
+    model.fit(X,y)
+    model.plot_decision_surface(X)
+    model.plot_hist_weights()

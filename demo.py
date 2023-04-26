@@ -117,11 +117,12 @@ class logistic_regression():
 
 with slt.sidebar:
 
-    slt.title("Logistic Rgeression")
+    slt.title("Logistic Regression Demo")
+    slt.subheader("Developed by: Dheeraj Yadav, Sandeep Desai")
 
 
     datasets=['Simple Classfication','Circles','Squares']
-    selected_dataset=slt.selectbox('Select Box', options=datasets)
+    selected_dataset=slt.selectbox('Select Dataset', options=datasets)
 
     degree=slt.select_slider('Degree', options=[1,2,3,4,5,6,7,8,9,10])
 
@@ -180,5 +181,12 @@ with slt.spinner('Training Model...'):
     fig,ax=plt.subplots()
     model=logistic_regression(degree,L2_penalty)
     model.fit(X,y)
-    model.plot_decision_surface(X)
-    model.plot_hist_weights()
+
+
+    col1, col2 = slt.columns(2, gap="medium")
+
+    with col1:
+        model.plot_decision_surface(X)
+
+    with col2:
+       model.plot_hist_weights()

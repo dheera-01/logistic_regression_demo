@@ -126,7 +126,8 @@ with slt.sidebar:
 
     degree=slt.select_slider('Degree', options=[1,2,3,4,5,6,7,8,9,10])
 
-    L2_penalty=slt.slider('L2 Penanlty', min_value=0.0, max_value=10.0, value=1.0, step=0.1)
+    # L2_penalty=slt.slider('L2 Penanlty', min_value=0.0, max_value=10.0, value=1.0, step=0.1)
+    L2_penalty = slt.select_slider('L2 Penanlty', options=[0.1, 1, 10, 100, 1000], value=1.0)
 
     L2_penalty=float(L2_penalty)
     X,y=None,None
